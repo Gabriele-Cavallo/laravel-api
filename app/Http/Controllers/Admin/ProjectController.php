@@ -10,6 +10,8 @@ use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewProject;
 
 
 class ProjectController extends Controller
@@ -84,6 +86,8 @@ class ProjectController extends Controller
         if($request->has('technologies')) {
             $newProject->technologies()->attach($form['technologies']);
         }
+
+        Mail::to('admin@boolpress.com')->send(new NewProject($newProject));
 
         // session()->flash('message', $newProject->name . 'successfully created.');
         return redirect()->route('admin.projects.show', $newProject->slug)->with('message', $newProject->name . ' successfully created.');
