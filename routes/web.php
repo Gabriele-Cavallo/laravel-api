@@ -40,3 +40,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Route per pagina generica
+Route::get('{any?}', function() {
+    return view('guest.home');
+})->where('any', '.*');
