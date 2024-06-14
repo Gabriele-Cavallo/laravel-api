@@ -16,10 +16,16 @@ class LeadController extends Controller
         $data = $request->all();
 
         // Valido i dati
-        $validator = Validator::make($data, [
+        $validator = Validator::make($data,
+         [
             'name' => 'required|max:255',
             'email' => 'required|email',
-            'message' => 'required'
+            'message' => 'required',
+            'accepted_tc' => 'required|boolean|accepted'
+        ],
+        [
+            'accepted_tc.required' => 'You must accept terms and conditions',
+            'accepted_tc.accepted' => 'You must accept terms and conditions',
         ]);
 
         // Se ci sono errori torno la risposta di errore
